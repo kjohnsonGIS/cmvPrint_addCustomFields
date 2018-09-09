@@ -142,13 +142,14 @@ define([
                 var inputInsertSlot = null;
                 if ( typeof(item) === 'object'){
                     for (var e in item){
-                        console.log(item[e], ':', e);
+                        console.log(e,':',item[e]);
                         CustLabel = item[e];
                         //that.customElementIds.push(e);
                         custElements.push(e);
                     }
                     if (e !== undefined){
                         //create some new DOM nodes to place the new input widget
+                        //probably to much reliance on existing dom, not sure if better way to get custom fields right after the title
                         newRow = domConstruct.toDom('<tr><td style="width:30px;">' + CustLabel + ':</td><td></td></tr>');
                         domConstruct.place(newRow, inputTitleRow[0], 'after'); 
                         inputInsertSlot = query('td:nth-child(2)', newRow);
