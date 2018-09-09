@@ -132,7 +132,8 @@ define([
         addCustomfields: function (){
             var templateTable = this.printSettingsFormDijit.domNode;
             var inputTitleRow = query("table tbody tr:first-child", templateTable);   
-            var that = this;
+            //var that = this;
+            var custElements = [];
             array.forEach(this.customElements, function(item, index){
                 var CustLabel = null;
                 var newRow = null;
@@ -143,7 +144,8 @@ define([
                     for (var e in item){
                         console.log(item[e], ':', e);
                         CustLabel = item[e];
-                        that.customElementIds.push(e);
+                        //that.customElementIds.push(e);
+                        custElements.push(e);
                     }
                     if (e !== undefined){
                         //create some new DOM nodes to place the new input widget
@@ -161,8 +163,9 @@ define([
                     }
                 }
             });     
-            if (that.customElementIds.length > -1) {
-                this.customElementIds = that.customElementIds;
+            //if (that.customElementIds.length > -1) {
+            if (custElements.length > -1) { 
+                this.customElementIds = custElements; //that.customElementIds;
             }
         }, 
         operationalLayersInspector: function (opLayers) {
