@@ -112,7 +112,7 @@ define([
             this.printparams.outSpatialReference = this.map.spatialReference;
             //this is new
             if (this.customElements) {
-                console.log('about to add a new field!');
+                console.log('about to add new fields!');
                 this.addCustomfields();
             }                
             
@@ -130,43 +130,39 @@ define([
         },
         //this is new
         addCustomfields: function (){
-            var templateTable = this.printSettingsFormDijit.domNode;
-            var inputTitleRow = query("table tbody tr:first-child", templateTable);   
-            //var that = this;
+            var printForm = this.printSettingsFormDijit.domNode;
+            var formTitle = query("table tbody tr:first-child", printForm);   
             var custElements = [];
             array.forEach(this.customElements, function(item, index){
-                var CustLabel = null;
+                var customLabel = null;
                 var newRow = null;
-                var newinput = null;
-                var inputDiv = null;
+                var inputDiv = null;                
+                var newInput = null;
                 var inputInsertSlot = null;
                 if ( typeof(item) === 'object'){
                     for (var e in item){
-                        console.log(e,':',item[e]);
-                        CustLabel = item[e];
-                        //that.customElementIds.push(e);
+                        customLabel = item[e];
                         custElements.push(e);
                     }
                     if (e !== undefined){
                         //create some new DOM nodes to place the new input widget
-                        //probably to much reliance on existing dom, not sure if better way to get custom fields right after the title
-                        newRow = domConstruct.toDom('<tr><td style="width:30px;">' + CustLabel + ':</td><td></td></tr>');
-                        domConstruct.place(newRow, inputTitleRow[0], 'after'); 
+                        //probably too much reliance on existing dom, not sure if better way to get custom fields right after the title                        
+                        newRow = domConstruct.toDom('<tr><td style="width:30px;">' + customLabel + ':</td><td></td></tr>');
+                        domConstruct.place(newRow, formTitle[0], 'after'); 
                         inputInsertSlot = query('td:nth-child(2)', newRow);
                         inputDiv = domConstruct.toDom('<div></div>');
                         domConstruct.place(inputDiv, inputInsertSlot[0]);    
-                        newinput= new ValidationTextBox({
+                        newInput= new ValidationTextBox({
                             required: false, 
                             style: 'width:100%', 
                             name: e
                         }, inputDiv);  
-                        newinput.startup();                            
+                        newInput.startup();                            
                     }
                 }
             });     
-            //if (that.customElementIds.length > -1) {
             if (custElements.length > -1) { 
-                this.customElementIds = custElements; //that.customElementIds;
+                this.customElementIds = custElements; 
             }
         }, 
         operationalLayersInspector: function (opLayers) {
